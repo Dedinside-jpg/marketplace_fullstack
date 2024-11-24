@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+body {
+  margin: 0;
+  height: 100vh;
+  justify-content: space-around;
+  font: 62.5% "Montserrat", sans-serif;
+  background-color: #201c29;
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+}
+
+h1 {
+  text-transform: uppercase;
+  position: fixed;
+  text-align: left;
+  top: 0;
+  left: 0;
+  font-size: 30px;
+  color: #ab49de;
+  background-image: linear-gradient(-90deg, #ab49de, #180622);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  user-select: none;
+}
+
+.bar {
+  margin: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 1em;
+  display: flex;
+  min-width: 380px;
+  height: 100px;
+  justify-content: space-around;
+  align-items: center;
+}
+.bar li {
+  position: relative;
+  list-style: none;
+  border-radius: 1em;
+}
+.bar li::before, .bar li::after {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1;
+  content: "";
+  width: 0%;
+  height: 2px;
+  background-color: #9525cf;
+  transition: all 0.5s cubic-bezier(0.4, -1, 0.2, -1);
+}
+.bar li:before {
+  top: 0;
+  border-top-right-radius: 0.5em;
+  border-top-left-radius: 0.5em;
+}
+.bar li::after {
+  bottom: 0;
+  border-bottom-right-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+}
+.bar li:hover::before, .bar li:hover::after {
+  width: 25%;
+  height: 3px;
+}
+.bar li a {
+  text-decoration: none;
+  text-transform: uppercase;
+  display: block;
+  padding: 0.5em 2em;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #d39fee;
+}
+.bar li.active {
+  border-color: #370e4d;
+}
+.bar li.active::before, .bar li.active::after {
+  width: 100%;
+  height: 50%;
+}
