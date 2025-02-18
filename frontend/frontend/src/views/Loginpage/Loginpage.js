@@ -1,7 +1,23 @@
-import React from "react";
+import React, {useContext} from "react";
 import './style.css'
+import { Link } from 'react-router-dom'
+import AuthContext from "../../context/AuthContext";
 
 function Loginpage() {
+
+    const {loginUser} = useContext(AuthContext)
+    const handleSubmit = e => {
+        e.preventDefault()
+        const email = e.target.email.value
+        const password = e.target.password.value
+
+        email.length > 0 && loginUser(email, password)
+
+        console.log(email)
+        console.log(password)
+
+    }
+
     return (
         <div>
 
@@ -25,21 +41,21 @@ function Loginpage() {
                     <div className="logo">
                         <i className="fa fa-sign-in"></i>
                     </div>
-                    <div className="welcome"><strong>Welcome,</strong> please login</div>
+                    <div className="welcome"><strong>Добро пожаловать, бродяга!</strong>Великое ждет тебя!</div>
 
-                    <form className="form-horizontal login-form">
+                    <form onSubmit={handleSubmit} className="form-horizontal login-form">
                         <div className="form-group relative">
-                            <input id="login_username" className="form-control input-lg" type="email"
-                                   placeholder="Username" required/>
+                            <input id="login_email" className="form-control input-lg" type="email" name='email'
+                                   placeholder="Введите имя пользователя" required/>
                             <i className="fa fa-user"></i>
                         </div>
                         <div className="form-group relative password">
-                            <input id="login_password" className="form-control input-lg" type="password"
-                                   placeholder="Password" required/>
+                            <input id="login_password" className="form-control input-lg" type="password" name='password'
+                                   placeholder="Введите пароль" required/>
                             <i className="fa fa-lock"></i>
                         </div>
                         <div className="form-group">
-                            <button type="submit" className="btn btn-success btn-lg btn-block">Login</button>
+                            <button type="submit" className="btn btn-success btn-lg btn-block">Войти</button>
                         </div>
                         <div className="checkbox pull-left">
                             <label><input type="checkbox"/> Remember</label>
@@ -51,9 +67,10 @@ function Loginpage() {
                 </div>
 
                 <h4 className="text-center">
-                    <a target="_blank" href="https://codepen.io/Peeyush200/pen/mLwvJB">
-                        Check out Social login form
-                    </a>
+                    Нет аккаунта?
+                   <Link to="/register">
+                        Зарегистрироваться
+                    </Link>
                 </h4>
             </div>
 

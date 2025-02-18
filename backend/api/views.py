@@ -13,14 +13,14 @@ from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 
 
-
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer
+
 
 # Get All Routes
 
@@ -41,9 +41,7 @@ def testEndPoint(request):
         data = f"Congratulation {request.user}, your API just responded to GET request"
         return Response({'response': data}, status=status.HTTP_200_OK)
     elif request.method == 'POST':
-        text = request.POST.get('text')
-        data = f'Congratulation, your API just responded to POST request with text: {text}'
+        text = "Hello buddy"
+        data = f'Congratulation your API just responded to POST request with text: {text}'
         return Response({'response': data}, status=status.HTTP_200_OK)
-    return Response({}, status=status.HTTP_400_BAD_REQUEST)
-
-
+    return Response({}, status.HTTP_400_BAD_REQUEST)

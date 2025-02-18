@@ -1,8 +1,33 @@
 import React from "react";
 import './style.css'
 import './script.js'
+import { Link } from 'react-router-dom'
+import AuthContext from "../../context/AuthContext";
+import {useState, useContext} from "react";
+
 
 function Registerpage() {
+
+    const [email, setEmail] = useState("")
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const [password2, setPassword2] = useState("")
+
+    const {registerUser} = useContext(AuthContext)
+
+    console.log(email);
+    console.log(username);
+    console.log(password);
+    console.log(password2);
+
+
+    const handleSubmit = async e => {
+        e.preventDefault()
+        registerUser(email, username, password, password2)
+    }
+
+
+
     return (
         <div>
 
@@ -20,41 +45,47 @@ function Registerpage() {
             <body>
 
             <div id="particles-js"></div>
-            <body className="login">
+            <body className="register">
             <div className="container">
-                <div className="login-container-wrapper clearfix">
+                <div className="register-container-wrapper clearfix">
                     <div className="logo">
                         <i className="fa fa-sign-in"></i>
                     </div>
-                    <div className="welcome"><strong>New user?</strong> Great news!</div>
+                    <div className="welcome"><strong>Еще один бродяга?</strong> Отличные новости!</div>
 
-                    <form className="form-horizontal login-form">
+                    <form onSubmit={handleSubmit} className="form-horizontal register-form">
                         <div className="form-group relative">
-                            <input id="login_username" className="form-control input-lg" type="email"
-                                   placeholder="Username" required/>
+                            <input id="login_username" className="form-control input-lg" type="email" onChange={e => setEmail(e.target.value)}
+                                   placeholder="Введите Email" required/>
+                            <i className="fa fa-user"></i>
+                        </div>
+                        <div className="form-group relative">
+                            <input id="login_username" className="form-control input-lg" type="username" onChange={e => setUsername(e.target.value)}
+                                   placeholder="Введите имя пользователя" required/>
                             <i className="fa fa-user"></i>
                         </div>
                         <div className="form-group relative password">
-                            <input id="login_password" className="form-control input-lg" type="password"
-                                   placeholder="Password" required/>
+                            <input id="login_password" className="form-control input-lg" type="password" onChange={e => setPassword(e.target.value)}
+                                   placeholder="Введите пароль" required/>
+                            <i className="fa fa-lock"></i>
+                        </div>
+                        <div className="form-group relative password">
+                            <input id="login_password" className="form-control input-lg" type="password" onChange={e => setPassword2(e.target.value)}
+                                   placeholder="Повторите пароль" required/>
                             <i className="fa fa-lock"></i>
                         </div>
                         <div className="form-group">
-                            <button type="submit" className="btn btn-success btn-lg btn-block">Login</button>
-                        </div>
-                        <div className="checkbox pull-left">
-                            <label><input type="checkbox"/> Remember</label>
-                        </div>
-                        <div className="checkbox pull-right">
-                            <label> <a className="forget" href="" title="forget">Forgot your password</a> </label>
+                            <button type="submit" className="btn btn-success btn-lg btn-block">Зарегистрироваться
+                            </button>
                         </div>
                     </form>
                 </div>
 
                 <h4 className="text-center">
-                    <a target="_blank" href="https://codepen.io/Peeyush200/pen/mLwvJB">
-                        Check out Social login form
-                    </a>
+                    Already have an account?
+                    <Link to="/login">
+                        Login Now!
+                    </Link>
                 </h4>
             </div>
 
