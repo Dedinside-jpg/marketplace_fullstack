@@ -1,95 +1,113 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {useContext} from "react";
 import './style.css'
 import './script'
+import { jwtDecode } from 'jwt-decode'
+import AuthContext from "../../context/AuthContext";
+import {Link} from "react-router-dom";
 
 
 function Navbar() {
+
+    const {user, logoutUser} = useContext(AuthContext)
+  const token = localStorage.getItem("authTokens")
+
+  if (token) {
+    const decoded = jwtDecode(token)
+    var user_id = decoded.user_id
+  }
+
     return (
-    <div>
-      <>
-        <meta charSet="UTF-8"/>
-        <title>Bricks.io - Homepage</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link
-            rel="shortcut icon"
-            type="image/png"
-            href="https://image.ibb.co/fOur3b/favicon.png"
-        />
-        <meta name="theme-color" content="#3a9fff"/>
-        <link rel="stylesheet" href="./style.css"/>
+        <div>
+          <>
+            <div className="area"/>
+            <nav className="main-menu">
+              <ul>
+                <li>
+                  <a href="https://jbfarrow.com">
+                    <i className="fa fa-home fa-2x"/>
+                    <span className="nav-text">Community Dashboard</span>
+                  </a>
+                </li>
+                <li className="has-subnav">
+                  <a href="#">
+                    <i className="fa fa-globe fa-2x"/>
+                    <span className="nav-text">Global Surveyors</span>
+                  </a>
+                </li>
+                <li className="has-subnav">
+                  <a href="#">
+                    <i className="fa fa-comments fa-2x"/>
+                    <span className="nav-text">Group Hub Forums</span>
+                  </a>
+                </li>
+                <li className="has-subnav">
+                  <a href="#">
+                    <i className="fa fa-camera-retro fa-2x"/>
+                    <span className="nav-text">Survey Photos</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i className="fa fa-film fa-2x"/>
+                    <span className="nav-text">Surveying Tutorials</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i className="fa fa-book fa-2x"/>
+                    <span className="nav-text">Surveying Jobs</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i className="fa fa-cogs fa-2x"/>
+                    <span className="nav-text">Tools &amp; Resources</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i className="fa fa-map-marker fa-2x"/>
+                    <span className="nav-text">Member Map</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i className="fa fa-info fa-2x"/>
+                    <span className="nav-text">Documentation</span>
+                  </a>
+                </li>
+              </ul>
+              {token === null &&
+                  <>
+              <ul className="register">
+                <li>
+                  <a href="/register">
+                    <i className="fa fa-user fa-2x"></i>
+                    <span className="nav-text">Sign in</span>
+                  </a>
+                </li>
+              </ul>
+                </>
+              }
+              {token !== null &&
+                  <>
+                    <ul className="logout">
+                      <li>
+                        <a href="/" onClick={logoutUser} style={{cursor: "pointer"}}>
+                          <i className="fa fa-power-off fa-2x"/>
+                          <span className="nav-text">Logout</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </>
+              }
+            </nav>
+          </>
+          <script src="https://kit.fontawesome.com/46a11addf1.js" crossOrigin="anonymous"></script>
 
-        <meta name="theme-color" content="#1885ed"/>
-        <title>Bricks.io - Homepage</title>
-        <header className="header">
-          <div className="container header__container">
-            <div className="header__logo">
-              <img
-                  className="header__img"
-                  src="https://image.ibb.co/kcVou6/path3000.png"
-              />{" "}
-              <h1 className="header__title">
-                Bricks<span className="header__light">.io</span>
-              </h1>
-            </div>
-            <button
-                type="button"
-                className="navbar-toggle collapsed"
-                data-toggle="collapse"
-                data-target="#navbar"
-                aria-expanded="false"
-                aria-controls="navbar"
-            >
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"/>
-              <span className="icon-bar"/>
-              <span className="icon-bar"/>
-            </button>
-            <div className="header__menu">
-              <nav id="navbar" className="header__nav collapse">
-                <ul className="header__elenco">
-                  <li className="header__el">
-                    <a href="#" className="header__link">
-                      Home
-                    </a>
-                  </li>
-                  <li className="header__el">
-                    <a href="#" className="header__link">
-                      Pricing
-                    </a>
-                  </li>
-                  <li className="header__el">
-                    <a href="#" className="header__link">
-                      Success stories
-                    </a>
-                  </li>
-                  <li className="header__el">
-                    <a href="#" className="header__link">
-                      Blog
-                    </a>
-                  </li>
-                  <li className="header__el">
-                    <a href="#" className="header__link">
-                      Contact us
-                    </a>
-                  </li>
-                  <li className="header__el header__el--blue">
-                    <a href="" className="btn btn--white">
-                      Sign In →
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-          <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-          <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
-          <script src="./script.js"></script>
 
-        </header>
-      </>
-
-    </div>
+        </div>
     )
 }
 

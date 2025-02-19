@@ -13,19 +13,23 @@ import Navbar from "./views/Navbar/Navbar";
 
 function App() {
   return (
-     <Router>
-       <AuthProvider>
-           <Navbar/>
-           <Switch>
-               <PrivateRoute component={Dashboard} path="/dashboard" exact/>
-               <Route component={Loginpage} path="/login" />
-               <Route component={Registerpage} path="/register" exact/>
-               <Route component={Homepage} path="/" exact/>
+      <div className={"App"}>
+          <Router>
+              <AuthProvider>
 
+                  <Switch>
+                      <Route component={Loginpage} path="/login"/>
+                      <Route component={Registerpage} path="/register" exact/>
+                      <div>
+                          <Navbar/>
+                          <Route component={Homepage} path="/" exact/>
+                          <PrivateRoute component={Dashboard} path="/dashboard" exact/>
+                          </div>
+                  </Switch>
+              </AuthProvider>
+          </Router>
+          </div>
 
-           </Switch>
-       </AuthProvider>
-     </Router>
-  )
-}
+      )
+          }
 export default App
