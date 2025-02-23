@@ -11,25 +11,25 @@ import Navbar from "./views/Navbar/Navbar";
 
 
 
+
 function App() {
   return (
       <div className={"App"}>
           <Router>
               <AuthProvider>
-
+                    <Navbar/>
                   <Switch>
                       <Route component={Loginpage} path="/login"/>
                       <Route component={Registerpage} path="/register" exact/>
-                      <div>
-                          <Navbar/>
+
+
                           <Route component={Homepage} path="/" exact/>
                           <PrivateRoute component={Dashboard} path="/dashboard" exact/>
-                          </div>
+
                   </Switch>
               </AuthProvider>
           </Router>
-          </div>
-
+</div>
       )
           }
 export default App

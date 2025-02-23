@@ -1,16 +1,19 @@
 import React from "react";
 import {useContext} from "react";
 import './style.css'
-import './script'
+import './script.js'
 import { jwtDecode } from 'jwt-decode'
 import AuthContext from "../../context/AuthContext";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
+import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+
 
 
 function Navbar() {
 
     const {user, logoutUser} = useContext(AuthContext)
   const token = localStorage.getItem("authTokens")
+  const location = useLocation();
 
   if (token) {
     const decoded = jwtDecode(token)
@@ -20,92 +23,116 @@ function Navbar() {
     return (
         <div>
           <>
-            <div className="area"/>
-            <nav className="main-menu">
-              <ul>
-                <li>
-                  <a href="https://jbfarrow.com">
-                    <i className="fa fa-home fa-2x"/>
-                    <span className="nav-text">Community Dashboard</span>
-                  </a>
-                </li>
-                <li className="has-subnav">
-                  <a href="#">
-                    <i className="fa fa-globe fa-2x"/>
-                    <span className="nav-text">Global Surveyors</span>
-                  </a>
-                </li>
-                <li className="has-subnav">
-                  <a href="#">
-                    <i className="fa fa-comments fa-2x"/>
-                    <span className="nav-text">Group Hub Forums</span>
-                  </a>
-                </li>
-                <li className="has-subnav">
-                  <a href="#">
-                    <i className="fa fa-camera-retro fa-2x"/>
-                    <span className="nav-text">Survey Photos</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-film fa-2x"/>
-                    <span className="nav-text">Surveying Tutorials</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-book fa-2x"/>
-                    <span className="nav-text">Surveying Jobs</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-cogs fa-2x"/>
-                    <span className="nav-text">Tools &amp; Resources</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-map-marker fa-2x"/>
-                    <span className="nav-text">Member Map</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">
-                    <i className="fa fa-info fa-2x"/>
-                    <span className="nav-text">Documentation</span>
-                  </a>
-                </li>
-              </ul>
-              {token === null &&
-                  <>
-              <ul className="register">
-                <li>
-                  <a href="/register">
-                    <i className="fa fa-user fa-2x"></i>
-                    <span className="nav-text">Sign in</span>
-                  </a>
-                </li>
-              </ul>
-                </>
-              }
-              {token !== null &&
-                  <>
-                    <ul className="logout">
-                      <li>
-                        <a href="/" onClick={logoutUser} style={{cursor: "pointer"}}>
-                          <i className="fa fa-power-off fa-2x"/>
-                          <span className="nav-text">Logout</span>
-                        </a>
-                      </li>
-                    </ul>
+            <meta charSet="UTF-8"/>
+            <title>bootstrap 4 navbar</title>
+            <meta charSet="UTF-8"/>
+            <meta
+                name="viewport"
+                content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+            />
+            <head>
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+              <script src="https://kit.fontawesome.com/46a11addf1.js" crossOrigin="anonymous"></script>
+              <link
+                  rel="stylesheet"
+                  href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+              />
+              <link
+                  rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css"
+              />
+            </head>
+            <link rel="stylesheet" href="./style.css"/>
+            {/* partial:index.partial.html */}
+            <nav className="navbar navbar-expand-custom navbar-mainbg">
+              <a className="navbar-brand navbar-logo" href="#">
+                Navbar
+              </a>
+              <button
+                  className="navbar-toggler"
+                  type="button"
+                  aria-controls="navbarSupportedContent"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+              >
+                <i className="fas fa-bars text-white"/>
+              </button>
+              <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul className="navbar-nav ml-auto">
+                  <div className="hori-selector">
+                    <div className="left"/>
+                    <div className="right"/>
+                  </div>
+                  <li className={`nav-item ${location.pathname === "/" ? "active" : ""}`}>
+                    <Link className="nav-link" to={"/"}>
+                      <i className="far fa-address-book"/>
+                      Homepage
+                    </Link>
+                  </li>
+
+                  {token === null &&
+                      <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to={"/login"} href="javascript:void(0);">
+                      <i className="fa fa-sign-in-alt"/>
+                      Login
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to={"/register"} href="javascript:void(0);">
+                      <i className="fa fa-user"/>
+                      Register
+                    </Link>
+                  </li>
                   </>
               }
-            </nav>
-          </>
-          <script src="https://kit.fontawesome.com/46a11addf1.js" crossOrigin="anonymous"></script>
 
+
+                  {token !== null &&
+                      <>
+                        <li className={`nav-item ${location.pathname === "/dashboard" ? "active" : ""}`}>
+                          <Link className="nav-link" to={'/dashboard'}>
+                            <i className="fas fa-tachometer-alt"/>
+                            Dashboard
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <a className="nav-link" href="javascript:void(0);">
+                            <i className="far fa-clone"/>
+                            Components
+                          </a>
+                        </li>
+                        <li className="nav-item">
+                          <a className="nav-link" href="javascript:void(0);">
+                            <i className="far fa-calendar-alt"/>
+                            Calendar
+                          </a>
+                        </li>
+                        <li className="nav-item">
+                          <a className="nav-link" href="javascript:void(0);">
+                            <i className="far fa-chart-bar"/>
+                            Charts
+                          </a>
+                        </li>
+                        <li className="nav-item">
+                          <a className="nav-link" href="javascript:void(0);">
+                            <i className="far fa-copy"/>
+                            Documents
+                          </a>
+                        </li>
+                        <li className="nav-item">
+                          <a className="nav-link" onClick={logoutUser} style={{cursor: "pointer"}}
+                             href="javascript:void(0);">
+                            <i className="fa fa-sign-out-alt"></i>
+                          </a>
+                        </li>
+                      </>
+                  }
+                </ul>
+              </div>
+            </nav>
+            {/* partial */}
+          </>
 
         </div>
     )
