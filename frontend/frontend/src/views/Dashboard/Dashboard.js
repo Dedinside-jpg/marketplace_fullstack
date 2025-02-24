@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import useAxios from "../utils/useAxios"
+import useAxios from "../../utils/useAxios"
 import {jwtDecode} from 'jwt-decode'
 function Dashboard() {
 
@@ -16,32 +16,32 @@ function Dashboard() {
 
     }
 
-    useEffect(() => {
-      const fetchData = async () => {
-        try{
-          const response = await api.get("/test/")
-          setRes(response.data.response)
-        } catch (error) {
-          console.log(error);
-          setRes("Something went wrong")
-        }
-      }
-      fetchData()
-    }, [])
-
-
-    useEffect(() => {
-      const fetchPostData = async () => {
-        try{
-          const response = await api.post("/test/")
-          setRes(response.data.response)
-        } catch (error) {
-          console.log(error);
-          setRes("Something went wrong")
-        }
-      }
-      fetchPostData()
-    }, [])
+    // useEffect(() => {
+    //   const fetchData = async () => {
+    //     try{
+    //       const response = await api.get("/test/")
+    //       setRes(response.data.response)
+    //     } catch (error) {
+    //       console.log(error);
+    //       setRes("Something went wrong")
+    //     }
+    //   }
+    //   fetchData()
+    // }, [])
+    //
+    //
+    // useEffect(() => {
+    //   const fetchPostData = async () => {
+    //     try{
+    //       const response = await api.post("/test/")
+    //       setRes(response.data.response)
+    //     } catch (error) {
+    //       console.log(error);
+    //       setRes("Something went wrong")
+    //     }
+    //   }
+    //   fetchPostData()
+    // }, [])
 
 
   return (

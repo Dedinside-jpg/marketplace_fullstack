@@ -18,6 +18,10 @@ function Navbar() {
   if (token) {
     const decoded = jwtDecode(token)
     var user_id = decoded.user_id
+    var user_id = decoded.user_id
+      var username = decoded.username
+      var full_name = decoded.full_name
+      var image = decoded.image
   }
 
     return (
@@ -115,9 +119,9 @@ function Navbar() {
                           </a>
                         </li>
                         <li className="nav-item">
-                          <a className="nav-link" href="javascript:void(0);">
-                            <i className="far fa-copy"/>
-                            Documents
+                          <a className="nav-link" href="/profile">
+                            <i className="far fa-user"/>
+                            {username}
                           </a>
                         </li>
                         <li className="nav-item">

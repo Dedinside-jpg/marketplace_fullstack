@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from .models import User
 
 
-from .serializer import MyTokenObtainPairSerializer, RegisterSerializer
+from .serializer import MyTokenObtainPairSerializer, RegisterSerializer, UserSerializer
 
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -45,3 +45,11 @@ def testEndPoint(request):
         data = f'Congratulation your API just responded to POST request with text: {text}'
         return Response({'response': data}, status=status.HTTP_200_OK)
     return Response({}, status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateProfileView(generics.UpdateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
