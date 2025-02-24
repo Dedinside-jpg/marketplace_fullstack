@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useContext} from "react";
 import './style.css'
 import './script.js'
@@ -11,18 +11,46 @@ import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 
 function Navbar() {
 
-    const {user, logoutUser} = useContext(AuthContext)
-  const token = localStorage.getItem("authTokens")
+  const {user, logoutUser, setUser, updateUser} = useContext(AuthContext);
+  const token = localStorage.getItem("authTokens");
   const location = useLocation();
 
-  if (token) {
-    const decoded = jwtDecode(token)
-    var user_id = decoded.user_id
-    var user_id = decoded.user_id
-      var username = decoded.username
-      var full_name = decoded.full_name
-      var image = decoded.image
-  }
+
+  useEffect(() => {
+        if (token && !user) {
+            const decoded = jwtDecode(token);
+            console.log("Decoded user from token:", decoded);
+            setUser(decoded); // Восстанавливаем данные пользователя из токена
+        }
+    }, [token, user, setUser]);
+
+
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+        const token = JSON.parse(localStorage.getItem("authTokens"))?.access;
+        if (token) {
+            try {
+                const response = await fetch("http://127.0.0.1:8000/api/user/", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                    },
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    updateUser(userData); // Обновляем данные пользователя в контексте
+                    console.log("Данные обновлены")
+                }
+            } catch (error) {
+                console.error("Ошибка при загрузке данных пользователя:", error);
+            }
+        }
+    };
+
+    fetchUserData();
+}, []);
 
     return (
         <div>
@@ -76,14 +104,14 @@ function Navbar() {
 
                   {token === null &&
                       <>
-                  <li className="nav-item">
-                    <Link className="nav-link" to={"/login"} href="javascript:void(0);">
-                      <i className="fa fa-sign-in-alt"/>
-                      Login
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to={"/register"} href="javascript:void(0);">
+                        <li className={`nav-item ${location.pathname === "/login" ? "active" : ""}`}>
+                          <Link className="nav-link" to={"/login"} href="javascript:void(0);">
+                            <i className="fa fa-sign-in-alt"/>
+                            Login
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link className="nav-link" to={"/register"} href="javascript:void(0);">
                       <i className="fa fa-user"/>
                       Register
                     </Link>
@@ -118,13 +146,13 @@ function Navbar() {
                             Charts
                           </a>
                         </li>
-                        <li className="nav-item">
-                          <a className="nav-link" href="/profile">
+                        <li className={`nav-item ${location.pathname === "/profile" ? "active" : ""}`}>
+                          <Link className="nav-link" to={'/profile'}>
                             <i className="far fa-user"/>
-                            {username}
-                          </a>
+                            {user ? user.username : "Profile"} {/* Используем данные из контекста */}
+                          </Link>
                         </li>
-                        <li className="nav-item">
+                        <li className={`nav-item ${location.pathname === "/login" ? "active" : ""}`}>
                           <a className="nav-link" onClick={logoutUser} style={{cursor: "pointer"}}
                              href="javascript:void(0);">
                             <i className="fa fa-sign-out-alt"></i>

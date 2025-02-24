@@ -21,6 +21,20 @@ class RegisterView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer
 
+class UpdateProfileView(generics.UpdateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+class UserDetailView(generics.RetrieveAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
 
 # Get All Routes
 
@@ -30,6 +44,7 @@ def getRoutes(request):
         '/api/token/',
         '/api/register/',
         '/api/token/refresh/'
+        '/api/user'
     ]
     return Response(routes)
 
@@ -47,9 +62,4 @@ def testEndPoint(request):
     return Response({}, status.HTTP_400_BAD_REQUEST)
 
 
-class UpdateProfileView(generics.UpdateAPIView):
-    serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
 
-    def get_object(self):
-        return self.request.user
